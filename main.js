@@ -73,13 +73,19 @@
 
   /* contact details from config.js: email and WhatsApp */
   var EMAIL = CFG.email || "info@thebaezlendingteam.com";
-  $$('a[href^="mailto:"]').forEach(function (a) { a.href = "mailto:" + EMAIL; if (a.textContent.indexOf("@") > -1) a.textContent = EMAIL; });
+  $$('a[href^="mailto:"]').forEach(function (a) { a.href = "mailto:" + EMAIL; if (!a.children.length && a.textContent.indexOf("@") > -1) a.textContent = EMAIL; });
+  $$(".js-email-text").forEach(function (el) { el.textContent = EMAIL; });
   var WA = String(CFG.whatsapp || "").replace(/[^0-9]/g, "");
   function waLink(text) { return "https://wa.me/" + WA + (text ? "?text=" + encodeURIComponent(text) : ""); }
   if (WA) {
-    $$(".js-wa").forEach(function (a) { a.href = waLink(""); a.textContent = "+" + WA.replace(/^1(\d{3})(\d{3})(\d{4})$/, "1 ($1) $2-$3"); });
+    $$(".js-wa").forEach(function (a) { a.href = waLink(""); var n = $(".js-wa-num", a) || a; n.textContent = WA.replace(/^1(\d{3})(\d{3})(\d{4})$/, "($1) $2-$3"); });
     $$(".js-wa-row").forEach(function (el) { el.hidden = false; });
+  } else {
+    $$(".js-wa-row, .js-wa-chat").forEach(function (el) { el.hidden = true; });
   }
+
+  function setWaChats() { if (!WA) return; $$(".js-wa-chat").forEach(function (a) { a.href = waLink(t(a.getAttribute("data-wa-msg") || "waMsgHello")); }); }
+  setWaChats(); document.addEventListener("baez:lang", setWaChats);
 
   /* topic prefill: any link with data-topic opens the form on that subject */
   document.addEventListener("click", function (e) {
@@ -189,6 +195,14 @@
 
   /* loan index: picking a loan shows its details and photo (inline on phones) */
   var liItems = $$("#li-list .menu-item"), liImg = $("#li-img"), liCopy = $("#li-panel-copy"), liCurrent = null;
+  var liTabs = $$(".li-tab"), curGroup = null;
+  function showGroup(g, keepSelection) {
+    if (!g || g === curGroup) return;
+    curGroup = g;
+    liTabs.forEach(function (b) { b.setAttribute("aria-selected", String(b.getAttribute("data-group") === g)); });
+    liItems.forEach(function (it) { it.hidden = it.getAttribute("data-group") !== g; });
+    if (!keepSelection) { var first = liItems.filter(function (it) { return !it.hidden && !it.classList.contains("dim"); })[0] || liItems.filter(function (it) { return !it.hidden; })[0]; if (first) selectLoan(first); }
+  }
   function selectLoan(item, focus) {
     if (!item) return;
     liCurrent = item;
@@ -197,9 +211,7 @@
       liImg.classList.remove("in"); liImg.srcset = item.getAttribute("data-srcset") || ""; liImg.src = item.getAttribute("data-img");
       requestAnimationFrame(function () { liImg.classList.add("in"); });
     }
-    var liCount = $("#li-count"), liCredit = $("#li-credit");
-    if (liCount) { var n = liItems.indexOf(item) + 1; liCount.textContent = (n < 10 ? "0" : "") + n; }
-    if (liCredit) liCredit.textContent = "Photo: " + (item.getAttribute("data-credit") || "");
+    showGroup(item.getAttribute("data-group"), true);
     if (liCopy) {
       liCopy.innerHTML = "<p class='li-panel-fam'>" + item.querySelector(".li-fam").textContent + "</p><h3>" + item.querySelector(".li-name").textContent + "</h3>" + item.querySelector(".li-detail").innerHTML;
     }
@@ -208,6 +220,18 @@
   liItems.forEach(function (it) {
     it.querySelector(".li-btn").addEventListener("click", function () { selectLoan(it); });
     it.querySelector(".li-btn").addEventListener("mouseenter", function () { if (window.matchMedia("(hover: hover) and (min-width: 1001px)").matches) selectLoan(it); });
+  });
+  /* tabs: count what is actually on the page; hide a group with nothing confirmed */
+  liTabs.forEach(function (b) {
+    var g = b.getAttribute("data-group"), n = liItems.filter(function (it) { return it.getAttribute("data-group") === g; }).length;
+    var c = $(".li-tab-n", b); if (c) c.textContent = n;
+    if (!n) b.hidden = true;
+    b.addEventListener("click", function () { showGroup(g); });
+    b.addEventListener("keydown", function (e) {
+      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+      var vis = liTabs.filter(function (x) { return !x.hidden; }), i = vis.indexOf(b) + (e.key === "ArrowRight" ? 1 : -1);
+      var nb = vis[(i + vis.length) % vis.length]; nb.focus(); nb.click();
+    });
   });
   selectLoan(liItems[0]);
 
@@ -256,21 +280,54 @@
   var pathLine = $("#path-line"), pathSteps = pathLine ? $$("li", pathLine) : [], aboutCut = $(".about-cut");
   var desktopMotion = window.matchMedia("(min-width: 1001px) and (hover: hover)");
 
-  /* closing reel: plays silently while on screen (desktop, motion allowed); the visitor can unmute with the controls */
-  var autoclips = $$(".js-autoclip");
-  if (autoclips.length && "IntersectionObserver" in window && desktopMotion.matches && !reduceMotion.matches) {
+  /* closing day: Oscar's message starts by itself (muted, subtitles are in the video) as soon as the
+     section is on screen; tap the sound button for audio. When it finishes, the celebration reel plays next.
+     Not with Reduce Motion or Data Saver. */
+  var firstClip = $(".js-firstclip"), nextClip = $(".js-nextclip"), clipsMedia = $(".closings-media");
+  var saveData = navigator.connection && navigator.connection.saveData;
+  var userTook = false; /* once the visitor presses play/pause themselves, we stop auto-playing */
+  $$(".closings .clip-play, .closings .clip-sound, .closings video").forEach(function (el) { el.addEventListener("click", function () { userTook = true; }); });
+  if (firstClip && clipsMedia && "IntersectionObserver" in window && !reduceMotion.matches && !saveData) {
     var clipIO = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
-        var v = en.target;
-        if (en.isIntersecting) { v.preload = "auto"; var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); }
-        else if (!v.paused) v.pause();
+        if (en.isIntersecting) {
+          firstClip.preload = "auto";
+          if (!userTook && firstClip.paused && (!nextClip || nextClip.paused)) { firstClip.muted = true; var pr = firstClip.play(); if (pr && pr.catch) pr.catch(function () {}); }
+        } else if (!userTook) {
+          [firstClip, nextClip].forEach(function (v) { if (v && !v.paused && v.muted) v.pause(); });
+        }
       });
-    }, { threshold: 0.45 });
-    autoclips.forEach(function (v) { clipIO.observe(v); });
+    }, { threshold: 0.4 });
+    clipIO.observe(clipsMedia);
+    /* get the first video ready a little before the visitor arrives */
+    var warmIO = new IntersectionObserver(function (entries) { if (entries[0].isIntersecting) { firstClip.preload = "auto"; warmIO.disconnect(); } }, { rootMargin: "800px 0px" });
+    warmIO.observe(clipsMedia);
+    if (nextClip) firstClip.addEventListener("ended", function () { if (!userTook) { nextClip.muted = true; var p2 = nextClip.play(); if (p2 && p2.catch) p2.catch(function () {}); } });
   }
-  /* only one video plays at a time */
-  $$(".closings video").forEach(function (v) {
-    v.addEventListener("play", function () { $$(".closings video").forEach(function (o) { if (o !== v && !o.paused) o.pause(); }); });
+
+  /* custom controls: one tap plays (with sound for Oscar's message), tap again pauses;
+     a video with sound pauses the others; when it ends it goes back to its cover picture */
+  $$(".closings .clip-frame").forEach(function (fr) {
+    var v = $("video", fr), play = $(".clip-play", fr), snd = $(".clip-sound", fr), bar = $(".clip-bar i", fr);
+    if (!v) return;
+    function soundIcon() { if (!snd) return; $("use", snd).setAttribute("href", v.muted ? "#i-mute" : "#i-sound"); snd.setAttribute("aria-label", t(v.muted ? "soundOn" : "soundOff")); var tt = $(".clip-sound-t", snd); if (tt) tt.hidden = !v.muted; }
+    function start(withSound) {
+      v.preload = "auto";
+      if (withSound) v.muted = false;
+      var pr = v.play(); if (pr && pr.catch) pr.catch(function () { v.muted = true; v.play(); });
+      soundIcon();
+    }
+    if (play) play.addEventListener("click", function () { start(true); });
+    v.addEventListener("click", function () { if (v.paused) start(true); else v.pause(); });
+    if (snd) snd.addEventListener("click", function (e) { e.stopPropagation(); v.muted = !v.muted; if (v.paused) start(!v.muted); soundIcon(); });
+    v.addEventListener("play", function () {
+      fr.classList.add("playing"); if (snd) snd.hidden = false;
+      if (!v.muted) $$(".closings video").forEach(function (o) { if (o !== v && !o.paused) o.pause(); });
+    });
+    v.addEventListener("pause", function () { fr.classList.remove("playing"); });
+    v.addEventListener("volumechange", function () { soundIcon(); if (!v.muted && !v.paused) $$(".closings video").forEach(function (o) { if (o !== v && !o.paused) o.pause(); }); });
+    v.addEventListener("timeupdate", function () { if (bar && v.duration) bar.style.transform = "scaleX(" + (v.currentTime / v.duration).toFixed(4) + ")"; });
+    v.addEventListener("ended", function () { fr.classList.remove("playing"); if (bar) bar.style.transform = "scaleX(0)"; v.load(); });
   });
 
 
