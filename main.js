@@ -168,7 +168,7 @@
   function onScroll() {
     ticking = false;
     if (head) head.classList.toggle("is-scrolled", window.scrollY > 8);
-    if (mbar && heroBox) mbar.classList.toggle("show", heroBox.getBoundingClientRect().bottom < window.innerHeight * 0.4);
+    if (mbar) mbar.classList.toggle("show", heroBox ? heroBox.getBoundingClientRect().bottom < window.innerHeight * 0.4 : window.scrollY > 240);
   }
   window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
   window.addEventListener("resize", onScroll);

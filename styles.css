@@ -1504,3 +1504,9 @@ body { color: var(--ink-soft); font-weight: 400; }
   .lp-fit { grid-template-columns: 1fr; }
   .lp-cta-btns .btn { flex: 1 1 100%; }
 }
+/* phones: comfortable tap targets (44px) */
+@media (max-width: 1000px) {
+  .lang-link { min-height: 44px; padding: 0 8px; display: inline-flex; align-items: center; }
+  .menu-ask, .m-more, .li-more { min-height: 44px; display: inline-flex; align-items: center; }
+  .loans-unsure a, .lp-back { display: inline-flex; align-items: center; min-height: 44px; }
+}
