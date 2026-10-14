@@ -83,8 +83,13 @@
     $$(".js-wa-row, .js-wa-chat").forEach(function (el) { el.hidden = true; });
   }
 
-  function setWaChats() { if (!WA) return; $$(".js-wa-chat").forEach(function (a) { a.href = waLink(t(a.getAttribute("data-wa-msg") || "waMsgHello")); }); }
+  function setWaChats() { if (!WA) return; $$(".js-wa-chat").forEach(function (a) { a.href = waLink(a.getAttribute("data-wa-text") || t(a.getAttribute("data-wa-msg") || "waMsgHello")); }); }
   setWaChats(); document.addEventListener("baez:lang", setWaChats);
+
+  (function () {
+    var qt = new URLSearchParams(location.search).get("topic"), sel = $("#f-topic");
+    if (qt && sel && sel.querySelector('option[value="' + qt.replace(/[^a-z]/g, "") + '"]')) sel.value = qt;
+  })();
 
   /* topic prefill: any link with data-topic opens the form on that subject */
   document.addEventListener("click", function (e) {
@@ -193,6 +198,7 @@
   });
 
   /* loan index: picking a loan shows its details and photo (inline on phones) */
+  $$("#li-list .menu-item[data-page]").forEach(function (it) { $$(".li-more", it).forEach(function (a) { a.href = it.getAttribute("data-page"); }); });
   var liItems = $$("#li-list .menu-item"), liImg = $("#li-img"), liCopy = $("#li-panel-copy"), liCurrent = null;
   var liTabs = $$(".li-tab"), curGroup = null;
   function showGroup(g, keepSelection) {
@@ -217,7 +223,10 @@
   }
   liItems = liItems.filter(function (it) { return document.body.contains(it); });
   liItems.forEach(function (it) {
-    it.querySelector(".li-btn").addEventListener("click", function () { selectLoan(it); });
+    it.querySelector(".li-btn").addEventListener("click", function () {
+      if (window.matchMedia("(min-width: 1001px)").matches && it.getAttribute("data-page")) { window.location.href = it.getAttribute("data-page") + (lang === "es" ? "?lang=es" : ""); return; }
+      selectLoan(it);
+    });
     it.querySelector(".li-btn").addEventListener("mouseenter", function () { if (window.matchMedia("(hover: hover) and (min-width: 1001px)").matches) selectLoan(it); });
   });
   /* tabs: count what is actually on the page; hide a group with nothing confirmed */
@@ -261,10 +270,23 @@
   var subLoans = $("#sub-loans-list");
   function buildLoanMenu() {
     if (!subLoans) return;
+    if (!liItems.length && window.BAEZ_PROGRAMS) {
+      subLoans.innerHTML = "";
+      var PROG2 = CFG.programs || {};
+      window.BAEZ_PROGRAMS.forEach(function (p) {
+        var st = PROG2[p.key] || "pending"; if (st === "off" || (st === "pending" && !CFG.reviewMode)) return;
+        var li = document.createElement("li"), a = document.createElement("a");
+        a.href = p.page; a.textContent = lang === "es" ? p.es : p.en;
+        if (document.body.getAttribute("data-program-page") === p.key) a.setAttribute("aria-current", "page");
+        li.appendChild(a); subLoans.appendChild(li);
+      });
+      var all = $(".sub-all", subLoans.parentElement); if (all) all.setAttribute("href", "index.html#loans");
+      return;
+    }
     subLoans.innerHTML = "";
     liItems.forEach(function (it) {
       var li = document.createElement("li"), a = document.createElement("a");
-      a.href = "#loans"; a.setAttribute("data-loan", it.getAttribute("data-program"));
+      a.href = it.getAttribute("data-page") || "#loans";
       a.textContent = it.querySelector(".li-name").textContent;
       li.appendChild(a); subLoans.appendChild(li);
     });

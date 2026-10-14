@@ -163,6 +163,7 @@ window.BAEZ_I18N = {
     loansIntroM: "Elija una categoría y toque un préstamo para leer más.",
     intIntroM: "Deslice y toque la opción que más se parezca a usted.",
     readMore: "Leer más sobre Oscar",
+    seeDetails: "Ver todos los detalles",
     gBuy: "Comprar casa",
     gRefi: "Refinanciar y capital",
     gSelf: "Independientes e ingresos especiales",
