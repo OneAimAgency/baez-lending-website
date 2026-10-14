@@ -62,8 +62,7 @@
 
   /* ================= integrations ================= */
   if (CFG.applyUrl) {
-    $$(".js-apply").forEach(function (a) { a.href = CFG.applyUrl; a.target = "_blank"; a.rel = "noopener noreferrer"; });
-    $$(".js-apply-url").forEach(function (a) { a.href = CFG.applyUrl; a.hidden = false; });
+    $$(".js-apply, .js-apply-url").forEach(function (a) { a.href = CFG.applyUrl; a.target = "_blank"; a.rel = "noopener noreferrer"; a.hidden = false; if ($("#newtab-note")) a.setAttribute("aria-describedby", "newtab-note"); });
     $$(".js-apply-ready").forEach(function (el) { el.hidden = false; });
     $$(".js-apply-pending, .js-apply-call").forEach(function (el) { el.hidden = true; });
   }

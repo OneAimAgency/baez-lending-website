@@ -7,7 +7,7 @@
 window.BAEZ_CONFIG = {
   // Oscar's secure mortgage application (Capstone / ARIVE). Paste his personal ARIVE link here.
   // Every "Apply Now" and application button uses it. Empty = buttons fall back to "Call to apply".
-  applyUrl: "",
+  applyUrl: "https://capstonemortgage.my1003app.com/958051/register",
 
   // Booking calendar (Calendly or similar). Paste the public booking link here.
   // Every "Book a consultation" button opens it. Empty = opens the contact form set to "Book a consultation".

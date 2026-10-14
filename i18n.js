@@ -150,6 +150,7 @@ window.BAEZ_I18N = {
     payNote: "Solo un estimado. No es una aprobación, una oferta, una tasa garantizada ni un pago garantizado.",
     nmlsOscar: "Oscar Baez NMLS #958051 en NMLS Consumer Access",
     nmlsCapstone: "Capstone Mortgage Lending NMLS #1973764 en NMLS Consumer Access",
+    newTabApply: "Abre la solicitud segura de Capstone Mortgage Lending en una pestaña nueva",
     gBuy: "Comprar casa",
     gRefi: "Refinanciar y capital",
     gSelf: "Independientes e ingresos especiales",
