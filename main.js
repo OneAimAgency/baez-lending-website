@@ -234,6 +234,11 @@
   });
   selectLoan(liItems[0]);
 
+  /* phones: "Read more about Oscar" */
+  $$(".m-more").forEach(function (b) {
+    b.addEventListener("click", function () { var box = b.parentElement, open = !box.classList.contains("more-open"); box.classList.toggle("more-open", open); b.setAttribute("aria-expanded", String(open)); b.hidden = open; });
+  });
+
   /* "What are you trying to do?" highlights the matching loan options */
   var chip = $("#intent-chip"), chipName = $("#intent-name");
   function setIntent(key, label) {

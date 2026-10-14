@@ -149,7 +149,8 @@
     <div class="hero-copy">
       <p class="kicker" data-i18n="heroKicker">Oscar Baez · Mortgage Loan Officer · Miami</p>
       <h1 id="hero-title" class="hero-title" data-i18n="heroTitle">Home Starts <span class="accent">Here.</span></h1>
-      <p class="hero-lead" data-i18n="heroLead2">Getting a mortgage doesn't have to feel confusing. Oscar walks you through every number and every step, from your first question to your front door.</p>
+      <p class="hero-lead m-only" data-i18n="heroLeadM">Clear, personal mortgage guidance in Miami, whether you're buying, refinancing or investing.</p>
+      <p class="hero-lead d-only" data-i18n="heroLead2">Getting a mortgage doesn't have to feel confusing. Oscar walks you through every number and every step, from your first question to your front door.</p>
       <div class="cta-row">
         <a class="btn btn-accent btn-lg" href="#start" data-i18n="ctaJourney">Start Your Home Journey</a>
         <a class="btn btn-outline btn-lg" href="#calculator"><span data-i18n="ctaPayment">Explore Your Payment</span><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
@@ -169,6 +170,20 @@
 </section>
 
 <!-- B · QUICK TRUST -->
+<section class="m-choices" aria-labelledby="mc-title">
+  <div class="wrap">
+    <h2 id="mc-title" class="mc-title" data-i18n="mcTitle">How can Oscar help you?</h2>
+    <ul class="mc-grid">
+      <li><a class="mc-tile" href="#goals"><span class="mc-ic mc-ic-a"><svg class="ic" aria-hidden="true"><use href="#i-home"/></svg></span><b data-i18n="mcBuy">Buy a home</b><small data-i18n="mcBuyD">Your first or your next</small></a></li>
+      <li><a class="mc-tile" href="#loans" data-loan="refinance"><span class="mc-ic mc-ic-b"><svg class="ic" aria-hidden="true"><use href="#i-grow"/></svg></span><b data-i18n="mcRefi">Refinance</b><small data-i18n="mcRefiD">Review your current loan</small></a></li>
+      <li><a class="mc-tile" href="#loans"><span class="mc-ic mc-ic-c"><svg class="ic" aria-hidden="true"><use href="#i-buildings"/></svg></span><b data-i18n="mcLoans">Loan options</b><small data-i18n="mcLoansD">14 programs, in plain words</small></a></li>
+      <li><a class="mc-tile" href="#calculator"><span class="mc-ic mc-ic-a"><svg class="ic" aria-hidden="true"><use href="#i-chart"/></svg></span><b data-i18n="mcCalc">Calculate payment</b><small data-i18n="mcCalcD">See a monthly estimate</small></a></li>
+      <li><a class="mc-tile mc-apply js-apply" href="#start"><span class="mc-ic"><svg class="ic" aria-hidden="true"><use href="#i-key"/></svg></span><b data-i18n="mcApply">Apply</b><small data-i18n="mcApplyD">Secure online application</small></a></li>
+      <li><a class="mc-tile" href="#contact" data-topic="talk"><span class="mc-ic mc-ic-b"><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg></span><b data-i18n="mcAsk">Ask Oscar</b><small data-i18n="mcAskD">Call, WhatsApp or message</small></a></li>
+    </ul>
+  </div>
+</section>
+
 <section class="trust" aria-label="Credentials">
   <div class="wrap">
     <ul class="trust-row">
@@ -185,7 +200,8 @@
 <section class="intent" id="goals" aria-labelledby="intent-title">
   <div class="wrap intent-head">
     <h2 id="intent-title" class="h2 h2-xl" data-i18n="intTitle">What are you trying to do?</h2>
-    <p class="sec-intro" data-i18n="intIntro">Start with your goal. Oscar will help you sort out the loan details.</p>
+    <p class="sec-intro m-only" data-i18n="intIntroM">Swipe and tap the one that sounds like you.</p>
+    <p class="sec-intro d-only" data-i18n="intIntro">Start with your goal. Oscar will help you sort out the loan details.</p>
   </div>
   <ul class="intent-strip">
     <li><a class="intent-col" href="#loans" data-intent="first">
@@ -210,7 +226,8 @@
       <p class="kicker" data-i18n="calcEyebrow">Mortgage calculator</p>
       <h2 id="calc-title" class="h2 h2-xl" data-i18n="calcTitle2">From payment to front door.</h2>
     </div>
-    <p class="sec-intro" data-i18n="calcIntro3">Drag the price. Watch the neighborhood change around you, and see what that home budget could mean every month.</p>
+    <p class="sec-intro m-only" data-i18n="calcIntroM">Drag the price to see a Miami-style home and your monthly estimate.</p>
+    <p class="sec-intro d-only" data-i18n="calcIntro3">Drag the price. Watch the neighborhood change around you, and see what that home budget could mean every month.</p>
   </div>
 
   <div class="stage" id="stage">
@@ -332,7 +349,8 @@
         <p class="kicker" data-i18n="loansKicker">Loan options</p>
         <h2 id="loans-title" class="h2 h2-xl" data-i18n="loansTitle">Find the loan family that fits.</h2>
       </div>
-      <p class="sec-intro" data-i18n="loansIntro">A plain-language overview. Oscar will help you compare options with your real numbers. Eligibility and terms depend on your situation and current program guidelines.</p>
+      <p class="sec-intro m-only" data-i18n="loansIntroM">Pick a category, then tap a loan to read about it.</p>
+      <p class="sec-intro d-only" data-i18n="loansIntro">A plain-language overview. Oscar will help you compare options with your real numbers. Eligibility and terms depend on your situation and current program guidelines.</p>
     </div>
     <p class="review-note" id="loans-review" hidden data-i18n="reviewNote">Preview only: each program below is waiting for confirmation from Oscar and Capstone. Unconfirmed programs are hidden automatically when the site goes live.</p>
     <div class="intent-chip" id="intent-chip" hidden><span data-i18n="showingFor">Showing options for:</span> <b id="intent-name"></b> <button type="button" id="intent-clear" data-i18n="showAll">Show all options</button></div>
@@ -474,7 +492,8 @@
       <ul class="promise promise-xl"><li data-i18n="m1">Opening Doors.</li><li data-i18n="m2">Building Futures.</li><li data-i18n="m3">Closing with Confidence.</li></ul>
       <h2 id="about-title" class="about-sub" data-i18n="aboutTitle2">A real person who guides you home.</h2>
       <p class="body-lg" data-i18n="aboutP1">Oscar Baez has been a licensed mortgage loan officer since 2012 and has completed more than 500 mortgage transactions for homebuyers and property investors.</p>
-      <p data-i18n="aboutP2">To him, a mortgage is never just paperwork. Behind every file is a person, a family, or an opportunity to build lasting financial stability. That is why he takes the time to explain your options in plain language, keeps you informed at every stage, and stays with you from the first conversation until the keys are in your hand.</p>
+      <button type="button" class="m-more m-only" aria-expanded="false" aria-controls="about-more" data-i18n="readMore">Read more about Oscar</button>
+      <p id="about-more" class="about-more" data-i18n="aboutP2">To him, a mortgage is never just paperwork. Behind every file is a person, a family, or an opportunity to build lasting financial stability. That is why he takes the time to explain your options in plain language, keeps you informed at every stage, and stays with you from the first conversation until the keys are in your hand.</p>
       <div class="signature">
         <img class="sig-seal" src="img/logo-160.webp" srcset="img/logo-160.webp 1x, img/logo-320.webp 2x, img/logo-480.webp 3x" width="160" height="162" alt="The Baez Lending Team logo" loading="lazy" decoding="async">
         <div class="sig-text">

@@ -1324,3 +1324,102 @@ body { color: var(--ink-soft); font-weight: 400; }
 .pay-note { margin-top: 8px; font-size: 12.5px; line-height: 1.45; color: var(--muted); }
 .foot-capstone { margin-top: 2px; font-size: 13.5px; color: #9FB0CB; }
 .legal-links a span { text-decoration: inherit; }
+
+/* =====================================================================
+   V15 · phones only (≤760px): clear, guided structure. Desktop unchanged.
+   Who Oscar is → how he helps → calculator → paths + loans → process →
+   why trust him → apply / contact
+   ===================================================================== */
+.m-only, .m-choices { display: none; }
+.m-more { display: none; }
+
+@media (max-width: 760px) {
+  .m-only { display: block; }
+  .d-only { display: none; }
+  .m-more { display: inline-flex; }
+
+  /* one logical order, top to bottom */
+  main { display: flex; flex-direction: column; }
+  .hero { order: 1; } .m-choices { order: 2; } .calc { order: 3; } .intent { order: 4; } .loans { order: 5; }
+  .path { order: 6; } .about { order: 7; } .trust { order: 8; } .start { order: 9; } .contact { order: 10; }
+
+  /* 1 · top of page: words first, one button, a modest photo */
+  .hero-grid { display: flex; flex-direction: column; }
+  .hero-copy { order: 1; padding: 28px 0 22px; }
+  .hero .threshold { order: 2; height: 230px; min-height: 0; margin: 0 0 28px; border-radius: 120px 120px 18px 18px; overflow: hidden; box-shadow: 0 24px 46px -30px rgba(11, 42, 91, .6); }
+  .hero .ground { display: none; }
+  .hero .guide { display: none; }
+  .hero-portrait img { object-position: 50% 60%; }
+  .kicker { font-size: 12px; letter-spacing: .12em; margin-bottom: 10px; }
+  .hero-title { font-size: clamp(2.5rem, 12vw, 3rem); }
+  .hero-lead { margin-top: 12px; font-size: 1.05rem; line-height: 1.55; }
+  .hero .cta-row { margin-top: 20px; }
+  .hero .cta-row .btn-outline, .hero-call { display: none; }
+  .hero .cta-row .btn-accent { width: 100%; min-height: 54px; }
+
+  /* 2 · guided choices */
+  .m-choices { display: block; position: relative; padding: 4px 0 40px; background: var(--paper); }
+  .mc-title { font-size: 1.45rem; font-weight: 600; color: var(--navy); letter-spacing: -.01em; margin-bottom: 14px; }
+  .mc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .mc-tile { display: grid; align-content: start; gap: 4px; min-height: 112px; padding: 14px 14px 16px; background: #fff; border: 1px solid var(--line); border-radius: 16px; text-decoration: none; box-shadow: 0 14px 30px -26px rgba(11, 42, 91, .5); transition: border-color .2s, transform .2s; }
+  .mc-tile:active { transform: scale(.98); }
+  .mc-tile b { font-size: 15.5px; font-weight: 600; color: var(--navy); line-height: 1.25; }
+  .mc-tile small { font-size: 12.5px; line-height: 1.35; color: var(--muted); }
+  .mc-ic { width: 38px; height: 38px; display: grid; place-items: center; margin-bottom: 6px; border-radius: 11px; }
+  .mc-ic .ic { width: 20px; height: 20px; stroke-width: 1.9; }
+  .mc-ic-a { background: #E3ECF8; color: var(--navy); }
+  .mc-ic-b { background: #FBE3CF; color: var(--orange-btn); }
+  .mc-ic-c { background: #E6F1EA; color: #2E6B47; }
+  .mc-apply { background: var(--navy); border-color: var(--navy); }
+  .mc-apply b { color: #fff; }
+  .mc-apply small { color: rgba(255, 255, 255, .75); }
+  .mc-apply .mc-ic { background: var(--orange-btn); color: #fff; }
+
+  /* 3 · calculator stays the signature; shorter lead-in */
+  .calc { padding-top: 40px; }
+  .calc-head { margin-bottom: 20px; }
+
+  /* 4 · buying paths: one swipeable row instead of a tall grid */
+  .intent { padding-top: 48px; }
+  .intent-head { margin-bottom: 16px; }
+  .intent-strip { display: flex; grid-template-columns: none; gap: 10px; height: auto; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 var(--gutter) 6px; margin: 0; width: 100%; border-bottom: 0; scrollbar-width: none; }
+  .intent-strip::-webkit-scrollbar { display: none; }
+  .intent-strip li { flex: 0 0 64%; height: 300px; scroll-snap-align: start; }
+  .intent-copy > span:not(.intent-n) { display: none; }
+
+  /* 5 · loans: tighter */
+  .loans { padding-top: 48px; padding-bottom: 48px; }
+  .loans-head { margin-bottom: 18px; }
+  .li-btn { padding: 15px 0; }
+
+  /* 6 · process: shorter photo, then the steps */
+  .path-photo { height: 380px; }
+  .path-photo .path-head { top: 28px; }
+  .path-card { margin-top: -70px; }
+  .closings { margin-top: 40px; }
+
+  /* 7 · why trust Oscar: shorter text first, details on request */
+  .about { padding: 56px 0 40px; }
+  .about-figure { max-width: 260px; }
+  .promise-xl li { font-size: clamp(1.7rem, 8vw, 2.1rem); }
+  .about-more { display: none; }
+  .about-copy.more-open .about-more { display: block; }
+  .m-more { margin-top: 12px; padding: 0; border: 0; background: none; font: 600 15px var(--font); color: var(--blue); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+  .trust { border-top: 1px solid var(--line); }
+  .trust-row { padding: 18px 0; }
+
+  /* 8 · apply / contact */
+  .start { padding: 48px 0; }
+  .start-figure { max-width: 240px; }
+  .contact { padding-top: 48px; }
+}
+@media (max-width: 760px) {
+  .hero .hero-grid { min-height: 0; }
+  .intent ul.intent-strip > li { flex: 0 0 64%; width: auto; height: 300px; min-height: 300px; }
+}
+@media (max-width: 760px) { .intent .intent-col { height: 100%; } }
+@media (max-width: 760px) {
+  .intent ul.intent-strip { flex-direction: row; }
+  .intent ul.intent-strip > li > .intent-col { display: block; height: 300px; }
+}
+@media (max-width: 760px) { .intent ul.intent-strip { padding: 0 16px 6px; scroll-padding-left: 16px; } }
