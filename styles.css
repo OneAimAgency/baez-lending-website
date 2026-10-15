@@ -1529,3 +1529,5 @@ body { color: var(--ink-soft); font-weight: 400; }
 .team-card b { font-size: 15.5px; color: var(--navy); line-height: 1.25; }
 .team-card small { font-size: 12.5px; color: var(--muted); line-height: 1.35; }
 @media (max-width: 560px) { .team-list { grid-template-columns: 1fr; } }
+.hero-portrait img { object-position: 50% 62%; }
+@media (max-width: 760px) { .hero-portrait img { object-position: 50% 60%; } }
