@@ -474,7 +474,7 @@
     function autoMi(ltv) {
       var tp = type();
       if (tp === "conv") return ltv > 80 ? 0.5 : 0;
-      if (tp === "fha") return ltv > 95 ? 0.55 : 0.5;
+      if (tp === "fha") return 0.55;
       return 0;
     }
     function upfrontRate(downPct) {
@@ -527,6 +527,7 @@
       }).join("");
       var interest = Math.max(0, pi * n - loan);
       var upNote = up ? '<div><dt>' + t(type() === "fha" ? "upfrontFha" : "upfrontVa") + "</dt><dd>" + money0.format(Math.round(base * up)) + "</dd></div>" : "";
+      if (up && type() === "va") upNote += '<div class="va-note"><dd>' + t("vaNote") + "</dd></div>";
       el.facts.innerHTML =
         "<div><dt>" + t("loan") + "</dt><dd>" + money0.format(Math.round(loan)) + "</dd></div>" +
         "<div><dt>" + t("down") + "</dt><dd>" + money0.format(Math.round(down)) + " · " + round(downPct, 1) + "%</dd></div>" +
