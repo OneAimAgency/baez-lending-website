@@ -1572,3 +1572,13 @@ body { color: var(--ink-soft); font-weight: 400; }
 .rv-logo { height: 76px; min-width: 178px; justify-content: center; }
 @media (max-width: 760px) { .rv-logo { height: 60px; min-width: 140px; } }
 .rv-single .rv-cell { padding-left: 0; }
+/* Testimonial Tree "coming soon": no numbers, no stars until the real rating exists */
+.rv-soon { cursor: default; }
+.rv-soon:hover { background: none; }
+.rv-soon .rv-stars { display: none; }
+.rv-soon .rv-num { font-size: clamp(1.5rem, 2.3vw, 2rem); letter-spacing: -.01em; white-space: nowrap; }
+.rv-soon .rv-num::after { content: ""; display: block; width: 36px; height: 3px; margin-top: 10px; border-radius: 2px; background: #F5B301; }
+.rv-soon .rv-count { max-width: 15ch; line-height: 1.35; }
+@media (max-width: 760px) { .rv-soon .rv-num { font-size: 1.45rem; } }
+@media (max-width: 760px) { .rv-soon .rv-meta { display: none; } .rv-cell { min-width: 0; } }
+@media (max-width: 380px) { .rv-logo { min-width: 0; padding: 8px 10px; height: 54px; } .rv-gword { font-size: 15px; } .rv-logo-tt img { width: 100px; } .rv-cell, .rv-cell:first-child { gap: 10px; } }

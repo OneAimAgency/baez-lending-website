@@ -97,6 +97,13 @@
     if (!band) return;
     $$(".rv-cell", band).forEach(function (cell) {
       var d = R[cell.getAttribute("data-rv")] || {}, r = parseFloat(d.rating);
+      cell.classList.remove("rv-soon");
+      if ((!r || !d.url) && d.comingSoon) {
+        shown++; cell.hidden = false; cell.removeAttribute("href"); cell.classList.add("rv-soon");
+        $(".rv-num", cell).textContent = t("rvSoon");
+        $(".rv-count", cell).textContent = t("rvSoonD");
+        return;
+      }
       if (!r || !d.url) { cell.hidden = true; return; }
       shown++; cell.hidden = false; cell.href = d.url;
       $(".rv-num", cell).textContent = r.toFixed(1);

@@ -33,7 +33,7 @@ window.BAEZ_CONFIG = {
   // Client reviews band (under the top of the homepage). Use ONLY real numbers from the real review pages.
   // Leave rating "" to hide a source; the whole band stays hidden until at least one is filled in.
   reviews: {
-    testimonialTree: { rating: "", count: "", url: "" },   // e.g. rating: "4.9", count: "250", url: "https://..."
+    testimonialTree: { rating: "", count: "", url: "", comingSoon: true },   // comingSoon: shows the logo with "Coming soon" (no numbers) until the real rating is filled in   // e.g. rating: "4.9", count: "250", url: "https://..."
     google: { rating: "5.0", count: "5", url: "https://share.google/cyqDxcv9TyItP6JHw" }   // checked 2026-10-15
   },
 
