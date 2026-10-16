@@ -1513,8 +1513,7 @@ body { color: var(--ink-soft); font-weight: 400; }
 
 /* V17 */
 /* 3 · beige behind the hero text, so it stands apart from the header and the credentials bar */
-.hero { background: #F3E9DC; }
-.hero::before { opacity: .55; }
+.hero { background: var(--paper); }
 @media (max-width: 760px) { .m-choices { background: var(--paper); } }
 /* 6 · VA funding fee note */
 .facts .va-note { grid-column: 1 / -1; }
