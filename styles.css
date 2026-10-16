@@ -1530,3 +1530,5 @@ body { color: var(--ink-soft); font-weight: 400; }
 @media (max-width: 560px) { .team-list { grid-template-columns: 1fr; } }
 .hero-portrait img { object-position: 50% 62%; }
 @media (max-width: 760px) { .hero-portrait img { object-position: 50% 60%; } }
+.hero-portrait img { object-position: 45% 60%; }
+@media (max-width: 760px) { .hero-portrait img { object-position: 40% 62%; } }
