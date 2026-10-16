@@ -1532,3 +1532,10 @@ body { color: var(--ink-soft); font-weight: 400; }
 @media (max-width: 760px) { .hero-portrait img { object-position: 50% 60%; } }
 .hero-portrait img { object-position: 45% 60%; }
 @media (max-width: 760px) { .hero-portrait img { object-position: 40% 62%; } }
+/* hero photo column: narrower on computers so the tall house photo shows roof to door */
+@media (min-width: 1001px) {
+  .hero .hero-grid { grid-template-columns: minmax(0, calc(58vw - max(var(--gutter), calc((100vw - 1360px) / 2 + var(--gutter))))) minmax(0, 1fr); }
+  .hero-portrait { inset: 0 0 0 58%; }
+  .hero .guide { left: calc(58% + 32px); }
+  .hero-portrait img { object-position: 50% 64%; }
+}
