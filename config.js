@@ -28,7 +28,7 @@ window.BAEZ_CONFIG = {
   // Other services shown in the menu, same rule as programs. Refinance confirmed (A&D refinance programs).
   services: { refinance: "on" },
   // true = preview for One Aim / Oscar review (shows pending programs with a note). Set to false at launch.
-  reviewMode: true,
+  reviewMode: false,
 
   // Client reviews band (under the top of the homepage). Use ONLY real numbers from the real review pages.
   // Leave rating "" to hide a source; the whole band stays hidden until at least one is filled in.
