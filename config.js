@@ -11,13 +11,13 @@ window.BAEZ_CONFIG = {
 
   // Booking calendar (Calendly or similar). Paste the public booking link here.
   // Every "Book a consultation" button opens it. Empty = opens the contact form set to "Book a consultation".
-  bookingUrl: "",
+  bookingUrl: "https://calendly.com/baezlendingteam/mortgage-consultation",
 
   // Email delivery for the contact form (no CRM). Web3Forms: create a free access key with Oscar's
   // email at web3forms.com and paste it below. The key is public by design, so it is safe here.
   // Empty = the visitor's own email app (or WhatsApp) sends the message; nothing is faked as "sent".
-  formEndpoint: "",
-  formAccessKey: "",
+  formEndpoint: "https://api.web3forms.com/submit",
+  formAccessKey: "60f663cb-63ab-4836-8b3a-9b0352c8bc41",   // Web3Forms key for info@thebaezlendingteam.com (2026-10-15)
 
   // Loan programs: confirmed by Oscar (A&D Mortgage line-up, 2026-10-13). "off" removes one.
   // "pending" programs are shown ONLY while reviewMode is true (preview), and hidden automatically at launch.
@@ -29,6 +29,13 @@ window.BAEZ_CONFIG = {
   services: { refinance: "on" },
   // true = preview for One Aim / Oscar review (shows pending programs with a note). Set to false at launch.
   reviewMode: true,
+
+  // Client reviews band (under the top of the homepage). Use ONLY real numbers from the real review pages.
+  // Leave rating "" to hide a source; the whole band stays hidden until at least one is filled in.
+  reviews: {
+    testimonialTree: { rating: "", count: "", url: "" },   // e.g. rating: "4.9", count: "250", url: "https://..."
+    google: { rating: "5.0", count: "5", url: "https://share.google/cyqDxcv9TyItP6JHw" }   // checked 2026-10-15
+  },
 
   phone: "+13053029291",
   phoneDisplay: "(305) 302-9291",

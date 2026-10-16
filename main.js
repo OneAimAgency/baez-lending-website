@@ -91,6 +91,24 @@
     if (qt && sel && sel.querySelector('option[value="' + qt.replace(/[^a-z]/g, "") + '"]')) sel.value = qt;
   })();
 
+  /* reviews band: real ratings from config.js only; hidden until a rating is filled in */
+  function setReviews() {
+    var R = CFG.reviews || {}, band = $("#reviews"), shown = 0;
+    if (!band) return;
+    $$(".rv-cell", band).forEach(function (cell) {
+      var d = R[cell.getAttribute("data-rv")] || {}, r = parseFloat(d.rating);
+      if (!r || !d.url) { cell.hidden = true; return; }
+      shown++; cell.hidden = false; cell.href = d.url;
+      $(".rv-num", cell).textContent = r.toFixed(1);
+      $(".rv-stars-fg", cell).style.width = Math.max(0, Math.min(100, r / 5 * 100)) + "%";
+      $(".rv-count", cell).textContent = d.count ? t("rvCount").replace("{n}", d.count) + " ›" : "";
+    });
+    var dv = $(".rv-div", band); if (dv) dv.hidden = shown < 2;
+    band.classList.toggle("rv-single", shown === 1);
+    band.hidden = !shown;
+  }
+  setReviews(); document.addEventListener("baez:lang", setReviews);
+
   /* topic prefill: any link with data-topic opens the form on that subject */
   document.addEventListener("click", function (e) {
     var a = e.target.closest && e.target.closest("[data-topic]");
