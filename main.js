@@ -499,7 +499,7 @@
     function autoMi(ltv) {
       var tp = type();
       if (tp === "conv") return ltv > 80 ? 0.5 : 0;
-      if (tp === "fha") return 0.55;
+      if (tp === "fha") return ltv > 90.0001 ? 0.55 : 0.5;   // 0.55 under 10% down, 0.50 with 10% down or more
       return 0;
     }
     function upfrontRate(downPct) {
